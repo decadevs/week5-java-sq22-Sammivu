@@ -16,51 +16,45 @@ public class Main {
 
         PriorityQueue<Person> people = new PriorityQueue<>();
         //People that can be added to the queue
-        Person p1 = new Person("Sampson", 30, Role.TEACHER);
-        Person p2 = new Person("Alabo Hamlet", 23,  Role.SENIOR_STUDENT);
-        Person p3 = new Person("Sunday Agbo", 40, Role.TEACHER);
-        Person p4 = new Person("Royal Mathias", 16, Role.JUNIOR_STUDENT);
+        Person teacher = new Person("Sampson Gbewa", 30, Role.TEACHER);
+        Person senior = new Person("Alabo Hamlet", 23,  Role.SENIOR_STUDENT);
+        Person junior = new Person("Royal Mathias", 16, Role.JUNIOR_STUDENT);
 
         //Books that can be added to the Library
-        Book book1 = new Book("How time flies" ,"Hamlet",3);
-        Book book2 = new Book("Today is here", "Royal",9);
-        Book book3 = new Book("The future is here", "Yomi",4);
-
-        Library librarian = new Library();
-        librarian.addBook(book1);
-        librarian.addBook(book2);
-        librarian.addBook(book3);
-
+        Book book1 = new Book("Things fall Apart" ,"Chinua Achebe",2);
+        Book book2 = new Book("Purple Hibiscus", "Chimamanda Ngozi Adichie",2);
+        Book book3 = new Book("Stay with Me", "Ayọ̀bámi Adébáyọ̀",2);
 
         LibraryServicesImpl libraryServices = new LibraryServicesImpl();
 
-        //Adding people to queue
-        libraryServices.addPersonToQueue(p2);
-        libraryServices.addPersonToQueue(p3);
-        libraryServices.addPersonToQueue(p4);
-        libraryServices.addPersonToQueue(p1);
-
-        // People's request to borrow book
-        p1.setBookBorrowed(book3);
-        p2.setBookBorrowed(book2);
-
-        //Processing request from people
-//        libraryServices.addRequest(book3,p1);
-//        libraryServices.addRequest(book2,p2);
-
-
-        //Book availability check
-        System.out.println(libraryServices.checkBookAvailability(p1,librarian.getBooks()));
-        System.out.println("****************************");
-
-        //Based on the persons on queue
-        System.out.println(libraryServices.booksGivenByRole(p2, librarian.getBooks()));
-        System.out.println(libraryServices.booksGivenByRole(p3, librarian.getBooks()));
-        System.out.println(libraryServices.booksGivenByRole(p1, librarian.getBooks()));
         System.out.println("*****************************************");
+        //Adding people to queue
+        System.out.println("First Come");
+        libraryServices.addPeopleToQueueOnFirstCome(junior);
+        libraryServices.addPeopleToQueueOnFirstCome(senior);
 
-        //Books given by priority
-        libraryServices.booksGivenByRole(librarian.getBooks());
+
+        System.out.println(libraryServices.booksGivenByFirstCome(book3));
+        System.out.println(libraryServices.booksGivenByFirstCome(book3));
+        System.out.println(libraryServices.booksGivenByFirstCome(book3));
+//        libraryServices.booksGivenByFirstCome(book3);
+//        libraryServices.booksGivenByFirstCome(book3);
+
+
+        System.out.println("****************************");
+        System.out.println("Priority");
+        //Adding people to queue
+        libraryServices.requestBook(junior, book2);
+        libraryServices.requestBook(senior, book2);
+        libraryServices.requestBook(teacher, book1);
+
+
+        libraryServices.giveBookBasedOnRole(book1);
+        libraryServices.giveBookBasedOnRole(book1);
+        libraryServices.giveBookBasedOnRole(book1);
+
+        System.out.println("*************************");
+
 
     }
 }

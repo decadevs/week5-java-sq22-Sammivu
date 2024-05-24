@@ -9,16 +9,19 @@ import java.util.PriorityQueue;
 
 public interface LibraryServices {
 
-     void addPersonToQueue (Person persons);
+     void addPersonToQueueOnPriority (Person persons);
+
+    String requestBook(Person person, Book book);
+
+    String giveBookBasedOnRole( Book book);
+
+    void addPeopleToQueueOnFirstCome(Person person);
 
 
-    boolean checkBookAvailability(Person person, List<Book> inventory);
+    String booksGivenByFirstCome(Book book);
 
 
-    String booksGivenByRole (Person BorrowedByPerson, List<Book> inventory);
 
-    void addRequest(Book book, Person person);
 
-    ArrayList<Person> returnBook();
 
 }

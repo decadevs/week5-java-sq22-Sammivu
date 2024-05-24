@@ -4,100 +4,73 @@ import org.example.models.Book;
 import org.example.models.Person;
 import org.example.services.PersonComparator;
 import org.example.services.LibraryServices;
+import org.w3c.dom.ls.LSOutput;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.PriorityQueue;
+
+import static org.example.models.Library.peoplePriorityQueue;
+import static org.example.models.Library.peopleQueue;
 
 public class LibraryServicesImpl implements LibraryServices {
 
-    ArrayList<Person> addRequest = new ArrayList<>();
-
-    PriorityQueue<Person> peoplePriorityQueue;
-    public LibraryServicesImpl() {
-        peoplePriorityQueue= new PriorityQueue<>(new PersonComparator());
-
-    }
 
     @Override
-    public void addPersonToQueue(Person persons) {
+    public void addPersonToQueueOnPriority(Person persons) {
         peoplePriorityQueue.add(persons);
     }
 
     @Override
-    public boolean checkBookAvailability(Person person, List<Book> inventory) {
-        // The logic for the availability
-       // System.out.println(person.getBookBorrowed());
-        for (Book book : inventory){
-            if(book.equals(person.getBookBorrowed())){
-                return true;
-            }
+    public String requestBook(Person person, Book book) {
+        if(book.getQuantityAvailable() <=0){
+            return "Book not Available";
         }
-        return false;
-    }
-
-
-
-
-//Method overloading was implemented here
-    @Override
-    public String booksGivenByRole(Person person1, List<Book> inventory) {
-
-        if (peoplePriorityQueue.isEmpty()){
-            return  "No person on the queue";
-        }
-
-        boolean check = checkBookAvailability(person1, inventory);
-
-        //System.out.println(person.getFullName());
-
-        if(check) return person1.getFullName()+" "+ person1.getRole()+ ", has taken "+ person1.getBookBorrowed()+ ".";
-
-        return person1.getFullName()+" "+ person1.getRole()+", book is not available "+ person1.getBookBorrowed()+ ".";
+        peoplePriorityQueue.add(person);
+        return person.getFullName()+ " Has requested for "+book.getBookTitle();
 
     }
-
-
-    public String booksGivenByRole( List<Book> inventory) {
-
-        if(peoplePriorityQueue.isEmpty())  return  "No person on the queue";
-
-        Iterator<Person> iterator = peoplePriorityQueue.iterator();
-        while (iterator.hasNext()){
-
-          //  System.out.println(iterator.next().getFullName());
-
-           Person person = peoplePriorityQueue.poll();
-            boolean check = checkBookAvailability(person, inventory);
-
-            if(check) {
-                assert person != null;
-                System.out.println(person.getFullName()+" "+person.getRole()+ ", has taken "+ person.getBookBorrowed()+ ".");
-            }
-            else{
-                assert person != null;
-
-                System.out.println(person.getFullName()+" "+person.getRole()+ ", book is not available "+ person.getBookBorrowed()+ ".");
-            }
-
-        }
-
-
-        return null;
-
-    }
-
 
     @Override
-    public void addRequest(Book book, Person person) {
-        addRequest.add(person);
+    public String giveBookBasedOnRole(Book book) {
+        if (peoplePriorityQueue.isEmpty()) {
+            System.out.println("No person on the queue");
+            return "No person on the queue";
+        } else if (book.getQuantityAvailable() == 0) {
+            System.out.println("Book Taken");
+            return "Book Taken";
+        }
+        Person person = peoplePriorityQueue.poll();
+
+        book.setQuantityAvailable(book.getQuantityAvailable() - 1);
+        assert person != null;
+        System.out.println(person.getFullName() + "has borrowed Book title" + book.getBookTitle() + ".");
+        return person.getFullName() + "Has borrowed" + book.getBookTitle() + ".";
+
     }
+
     @Override
-    public ArrayList<Person> returnBook(){
-
-        return addRequest;
+    public void addPeopleToQueueOnFirstCome(Person person) {
+        peopleQueue.add(person);
     }
 
+    @Override
+    public String booksGivenByFirstCome(Book book) {
 
+        if (peopleQueue.isEmpty()) {
+            return "Nobody on queue";
+        } else if (book.getQuantityAvailable() == 0) {
+            return "Book Taken";
+        }
+        //reduces the number of book
+        Person person = peopleQueue.poll();
+        book.setQuantityAvailable(book.getQuantityAvailable() - 1);
+
+        assert person != null;
+       // System.out.println(person.getFullName() + " " + person.getRole() + ", borrowed: " + bookTitle.getBookTitle() + ".");
+        return person.getFullName() + " " + person.getRole() + ", borrowed Book title: " + book.getBookTitle() + ".";
+
+    }
 }
+
+
+
+
+

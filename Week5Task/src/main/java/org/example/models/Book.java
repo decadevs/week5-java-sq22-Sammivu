@@ -17,32 +17,28 @@ public class Book {
         return bookTitle;
     }
 
+    public void setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
+    }
+
     public String getAuthor() {
         return author;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public int getQuantityAvailable() {
+
         return quantityAvailable;
     }
 
-    public boolean borrowBook() {
-        if (quantityAvailable > 0) {
-            quantityAvailable--;
-            return true;
-        } else {
-            return false;
-        }
+    public void setQuantityAvailable(int quantityAvailable) {
+        this.quantityAvailable = quantityAvailable;
     }
 
-
-    public void returnBook() {
-        quantityAvailable++;
-    }
-
-    @Override
-    public String toString() {
-        return "Book:" +
-                "BookTitle= " + bookTitle  +
-                ", Author= " + author ;
-    }
+//     if (quantityAvailable >0){
+//        return quantityAvailable;
+//    }else return 0;
 }

@@ -4,9 +4,9 @@ import org.example.enums.Role;
 
 public class Person {
 
-    private final String fullName;
-    private final int age;
-    private final Role role;
+    private  String fullName;
+    private  int age;
+    private  Role role;
     private Book bookBorrowed;
 
     public Person(String fullName, int age, Role role) {

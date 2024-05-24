@@ -1,22 +1,18 @@
 package org.example.models;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
+import org.example.services.PersonComparator;
+
+import java.util.*;
 
 public class Library {
 
-    List<Book> inventory;
+    public static PriorityQueue<Person> peoplePriorityQueue = new PriorityQueue<>(new PersonComparator());
+    public static Queue<Person> peopleQueue= new LinkedList<>();
+
+   private List<Book> inventory;
 
     public Library() {
         this.inventory = new ArrayList<>();
     }
 
-   public void addBook(Book book){
-        inventory.add(book);
-   }
-
-    public List<Book> getBooks(){
-        return  inventory;
-    }
 }
